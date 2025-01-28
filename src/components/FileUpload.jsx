@@ -7,9 +7,8 @@ import FlagComponent from "./FlagComponent";
 import { IoQrCodeSharp } from "react-icons/io5";
 import QRCodeGenerator from "./QRCodeGenerator";
 
-//const BASE_URL="https://green-flag.azurewebsites.net";
 
-const BASE_URL="https://greenflag.onrender.com";
+const BASE_URL=import.meta.env.VITE_API_BASE_URL;
 
 const FileUpload = () => {
   const [file, setFile] = useState(null);
