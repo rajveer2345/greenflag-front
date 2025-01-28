@@ -1,0 +1,13 @@
+.flag {
+    animation: wave 2s linear infinite;
+  }
+  
+  @keyframes wave {
+    from {
+      transform: translateX(65px);
+    }
+    to {
+      transform: translateX(0);
+    }
+  }
+  

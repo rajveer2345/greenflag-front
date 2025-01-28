@@ -1,0 +1,27 @@
+<svg class="loading" viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <clipPath id="flagMask">
+      <polygon id="mask" points="96,0 29.032,0 45.467,18.826 28.684,38 96,38"/>
+    </clipPath>
+  </defs>
+
+  <!-- Flagpole -->
+  <rect x="0" y="0" width="4" height="100" fill="gray"/>
+
+  <g clip-path="url(#flagMask)" transform="scale(-1,1) translate(-96,0)">
+    <path class="flag" fill="#05df72" d="M96,0c-8.118,0-8.364,4.504-16.471,4.504
+      c-7.657,0-8.026-4.504-16.47-4.504c-8.675,0-8.675,4.504-16.471,4.504c-8.091,0-8.091-4.504-16.471-4.504
+      c-8.492,0-8.739,4.504-16.47,4.504C5.027,4.504,5.37,0-2.822,0c-8.734,0-8.589,4.504-16.471,4.504S-26.251,0-33.763,0v34.438
+      c0,0,7.849,3.66,16.47,3.66c7.914,0,8.653-3.66,16.471-3.66c7.822,0,7.357,3.66,16.47,3.66s9.12-3.66,16.47-3.66
+      c8.01,0,8.133,3.66,16.471,3.66c7.276,0,7.549-3.66,16.471-3.66c8.689,0,8.936,3.66,16.47,3.66c8.497,0,8.333-3.66,16.471-3.66V0z"/>
+  </g>
+    <script type="text/javascript">
+    <![CDATA[
+      document.addEventListener("DOMContentLoaded", function() {
+        var flag = document.querySelector(".flag");
+        TweenMax.set(flag, {x: 65});
+        TweenMax.to(flag, 2, {x: 0, repeat: -1, ease: Linear.easeNone});
+      });
+    ]]>
+  </script>
+</svg>
