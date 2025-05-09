@@ -5,10 +5,11 @@ import Dnd from "./Dnd";
 import { MdDelete } from "react-icons/md";
 import FlagComponent from "./FlagComponent";
 import { IoQrCodeSharp } from "react-icons/io5";
+import { MdContentCopy } from "react-icons/md";
 import QRCodeGenerator from "./QRCodeGenerator";
 
 
-const BASE_URL=import.meta.env.VITE_API_BASE_URL;
+const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 const FileUpload = () => {
   const [file, setFile] = useState(null);
@@ -17,6 +18,17 @@ const FileUpload = () => {
   const [loaderx, setLoaderx] = useState(false);
   const [progress, setProgress] = useState(0);
   const [qrText, setQrText] = useState(null);
+
+  const handleCopy = (copyText) => {
+    navigator.clipboard.writeText(copyText)
+      .then(() => {
+        console.log("copied to clipboard!");
+      })
+      .catch(err => {
+        console.error("Failed to copy: ", err);
+      });
+  }
+
 
   const handleUpload = async () => {
     setLoader(true);
@@ -98,7 +110,7 @@ const FileUpload = () => {
     <div className="flex justify-center items-center h-screen w-full p-4 relative">
       {qrText && (
         <div class="absolute inset-0 bg-black/50 z-10 rounded-md flex justify-center items-center backdrop-blur-sm">
-          <QRCodeGenerator qrText={qrText} setQrText={setQrText} BASE_URL={BASE_URL}/>
+          <QRCodeGenerator qrText={qrText} setQrText={setQrText} BASE_URL={BASE_URL} />
         </div>
       )}
       {loaderx && (
@@ -142,9 +154,9 @@ const FileUpload = () => {
         </div>
         <div className="flex flex-col gap-2 w-full max-w-[600px]">
           {downloadLinks.map((file) => (
-            <div className="w-full border border-green-400 rounded-md flex items-center justify-between">
+            <div key={file} className="w-full border border-green-400 rounded-md flex items-center justify-between">
               <a
-                className="truncate text-sm text-gray-500 font-medium pl-2 pr-6 hover:text-green-600"
+                className="truncate text-sm text-blue-400 font-medium pl-2 pr-6 hover:text-gray-300"
                 href={`${BASE_URL}/download/${file}`}
                 target="_blank"
                 rel="noopener noreferrer"
@@ -154,17 +166,42 @@ const FileUpload = () => {
               <div className="flex">
                 <div
                   onClick={() => {
+                    handleCopy(`curl -o "${file}" "${BASE_URL}/download/${file}"`);
+                  }}
+                  className="w-10 h-8 min-w-10 bg-gray-400 hover:bg-gray-600 flex items-center justify-center border-r border-gray-300 cursor-pointer"
+                >
+                  <p className="text-white">CP</p>
+                </div>
+                <div
+                  onClick={() => {
+                    handleCopy(`Invoke-WebRequest -Uri "${BASE_URL}/download/${file}" -OutFile "${file}"`);
+                  }}
+                  className="w-10 h-8 min-w-10 bg-gray-400 hover:bg-gray-600 flex items-center justify-center border-r border-gray-300 cursor-pointer"
+                >
+                  <p className="text-white">PS</p>
+                </div>
+
+                <div
+                  onClick={() => {
                     setQrText(file);
                   }}
-                  className="w-10 h-8 min-w-10 bg-green-400 hover:bg-green-600 flex items-center justify-center "
+                  className="w-10 h-8 min-w-10 bg-gray-400 hover:bg-gray-600 flex items-center justify-center border-r border-gray-300 cursor-pointer"
                 >
                   <IoQrCodeSharp color="white" size={20} />
                 </div>
                 <div
                   onClick={() => {
+                    handleCopy(`${BASE_URL}/download/${file}`);
+                  }}
+                  className="w-10 h-8 min-w-10 bg-gray-400 hover:bg-gray-600 flex items-center justify-center cursor-pointer"
+                >
+                  <MdContentCopy color="white" size={20} />
+                </div>
+                <div
+                  onClick={() => {
                     deleteFile(file);
                   }}
-                  className="w-10 h-8 min-w-10 bg-red-400 hover:bg-red-600 flex items-center justify-center rounded-r-[5px]"
+                  className="w-10 h-8 min-w-10 bg-red-400 hover:bg-red-600 flex items-center justify-center rounded-r-[5px] cursor-pointer"
                 >
                   <MdDelete color="white" size={20} />
                 </div>
